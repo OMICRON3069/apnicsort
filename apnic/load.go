@@ -3,8 +3,11 @@ package apnic
 import (
 	"bufio"
 	"container/list"
+	"fmt"
 	"log"
+	"math"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -17,16 +20,24 @@ type ResultData struct {
 	allocateDate    time.Time
 }
 
-// start:42.62.176.0 value:1024
+// example: start:42.62.176.0 value:1024
 // 32-log(2\1024) is the cidr value
 func processIP(start, totalValue string) string {
-
+	floatValue, _ := strconv.ParseFloat(totalValue, 64)
+	cidr := 32 - math.Log2(floatValue)
+	return start + fmt.Sprintf("%f", cidr)
 }
 
+// example 20110414
+// order   01234567
 func processDate(date string) time.Time {
-
+	year, _ := strconv.Atoi(date[0:4])
+	month, _ := strconv.Atoi(date[4:6])
+	day, _ := strconv.Atoi(date[6:])
+	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 }
 
+// parse result into list
 func load() (resultList *list.List, errors error) {
 	remoteURL := "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
 
@@ -52,9 +63,13 @@ func load() (resultList *list.List, errors error) {
 		// then is a valied line
 		if strings.HasPrefix(line, "apnic") {
 			result := ResultData{}
+
 			s := strings.Split(line, "|")
+
 			result.cc, result.thetype = s[1], s[2]
-			//TODO: use process functions here
+			result.IP = processIP(s[3], s[4])
+			result.allocateDate = processDate(s[5])
+
 			resultList.PushBack(result)
 		}
 	}

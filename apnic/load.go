@@ -16,8 +16,8 @@ import (
 // The schema of apnic address file is
 // registry|cc|type|start|value|date|status[|extensions...]
 type ResultData struct {
-	cc, thetype, IP, asn string
-	allocateDate         time.Time
+	CC, TheType, IP, ASN string
+	AllocationDate       time.Time
 }
 
 // example: start:42.62.176.0 value:1024
@@ -66,15 +66,15 @@ func load() (resultList *list.List, errors error) {
 
 			s := strings.Split(line, "|")
 
-			result.cc, result.thetype = s[1], s[2]
+			result.CC, result.TheType = s[1], s[2]
 			//TODO:deal with asn condition
-			if result.thetype == "ipv4" {
+			if result.TheType == "ipv4" {
 				result.IP = processIP4(s[3], s[4])
-			} else if result.thetype == "asn" {
-				result.asn = s[3]
+			} else if result.TheType == "asn" {
+				result.ASN = s[3]
 			}
 
-			result.allocateDate = processDate(s[5])
+			result.AllocationDate = processDate(s[5])
 
 			resultList.PushBack(result)
 		}

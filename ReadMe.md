@@ -1,6 +1,6 @@
 # A Util to Sort APNIC Address
 
-Basicly, this program can deal with a list downloaded from http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest
+Basicly, this program can deal with the list downloaded from http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest
 
 ## TODO
 

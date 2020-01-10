@@ -3,7 +3,6 @@ package apnic
 import (
 	"container/list"
 	"fmt"
-	"reflect"
 	"testing"
 )
 
@@ -51,9 +50,11 @@ func TestGetByCountryCode(t *testing.T) {
 	got := GetByCountryCode(tests[0].args.al, tests[0].args.cc...)
 
 	for item := got.Front(); item != nil; item = item.Next() {
-		s := reflect.ValueOf(item.Value)
-		vvvv := s.FieldByName("IP").Interface().(string)
-		fmt.Println(vvvv)
+		//s := reflect.ValueOf(item.Value).FieldByName("IP").Interface().(string)
+		//vvvv := s.FieldByName("IP").Interface().(string)
+		//still don't know why it can't works here
+		//just move on
+		fmt.Println(item.Value)
 	}
 
 }

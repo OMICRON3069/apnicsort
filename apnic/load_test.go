@@ -8,7 +8,7 @@ import (
 )
 
 func Test_load(t *testing.T) {
-	result := load()
+	result := LoadURL()
 	for _, v := range result {
 		fmt.Println(v)
 	}

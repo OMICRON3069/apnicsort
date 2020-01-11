@@ -43,8 +43,8 @@ func processDate(date string) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 }
 
-// parse result into slice
-func load() (resultList []ResultData) {
+// LoadURL parses result into slice
+func LoadURL() (resultList []ResultData) {
 
 	// TODO: make this url configurable
 	remoteURL := "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
@@ -54,7 +54,7 @@ func load() (resultList []ResultData) {
 	resultList = make([]ResultData, 0)
 
 	// requesting url
-	log.Println("Download start, get list from apnic......")
+	log.Println("Download start, getting list from apnic......")
 	resp, err := http.Get(remoteURL)
 	if err != nil {
 		log.Println("Error occurs while downloading...")
@@ -85,6 +85,8 @@ func load() (resultList []ResultData) {
 				result.IP = processIP4(s[3], s[4])
 			} else if result.TheType == "asn" {
 				result.ASN = s[3]
+			} else if result.TheType == "ipv6" {
+				result.IP = s[3] + "/" + s[4]
 			}
 
 			// convert date to golang's schema

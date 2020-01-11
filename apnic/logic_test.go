@@ -8,7 +8,7 @@ import (
 
 func TestGetByCountryCode(t *testing.T) {
 	type args struct {
-		al *list.List
+		al []ResultData
 		cc []string
 	}
 	tests := []struct {
@@ -20,41 +20,42 @@ func TestGetByCountryCode(t *testing.T) {
 		{
 			"",
 			args{
-				&list.List{},
+				[]ResultData{
+					ResultData{
+						CC:      "CN",
+						TheType: "ipv4",
+						IP:      "1.83.0.0/8",
+					},
+					ResultData{
+						CC:      "NZ",
+						TheType: "ipv4",
+						IP:      "2.83.0.0/8",
+					},
+					ResultData{
+						CC:      "JP",
+						TheType: "ipv4",
+						IP:      "3.123.0.0/8",
+					},
+					ResultData{
+						CC:      "CN",
+						TheType: "ipv4",
+						IP:      "4.83.123.0/8",
+					},
+				},
 				[]string{"CN", "JP"},
 			},
 			&list.List{},
 		},
 	}
-	tests[0].args.al.PushBack(ResultData{
-		CC:      "CN",
-		TheType: "ipv4",
-		IP:      "1.83.0.0/8",
-	})
-	tests[0].args.al.PushBack(ResultData{
-		CC:      "NZ",
-		TheType: "ipv4",
-		IP:      "2.83.0.0/8",
-	})
-	tests[0].args.al.PushBack(ResultData{
-		CC:      "JP",
-		TheType: "ipv4",
-		IP:      "3.123.0.0/8",
-	})
-	tests[0].args.al.PushBack(ResultData{
-		CC:      "CN",
-		TheType: "ipv4",
-		IP:      "4.83.123.0/8",
-	})
 
 	got := GetByCountryCode(tests[0].args.al, tests[0].args.cc...)
 
-	for item := got.Front(); item != nil; item = item.Next() {
+	for _, v := range got {
 		//s := reflect.ValueOf(item.Value).FieldByName("IP").Interface().(string)
 		//vvvv := s.FieldByName("IP").Interface().(string)
 		//still don't know why it can't works here
 		//just move on
-		fmt.Println(item.Value)
+		fmt.Println(v)
 	}
 
 }

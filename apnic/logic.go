@@ -1,7 +1,7 @@
 package apnic
 
 // GetByCountryCode returns a list of data by one or more country code
-func (al *[]ResultData) GetByCountryCode(cc ...string) (resultList []ResultData) {
+func GetByCountryCode(al []ResultData, cc ...string) (resultList []ResultData) {
 	resultList = make([]ResultData, 0)
 
 	for _, v := range al {

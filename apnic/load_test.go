@@ -8,10 +8,7 @@ import (
 )
 
 func Test_load(t *testing.T) {
-	result, err := load()
-	if err != nil {
-		t.Errorf("hmmmm load function seems failed.....")
-	}
+	result := load()
 	for _, v := range result {
 		fmt.Println(v)
 	}

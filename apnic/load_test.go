@@ -1,6 +1,7 @@
 package apnic
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -11,8 +12,8 @@ func Test_load(t *testing.T) {
 	if err != nil {
 		t.Errorf("hmmmm load function seems failed.....")
 	}
-	for item := result.Front(); item != nil; item = item.Next() {
-		//fmt.Println(item)
+	for _, v := range result {
+		fmt.Println(v)
 	}
 }
 

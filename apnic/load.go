@@ -2,7 +2,6 @@ package apnic
 
 import (
 	"bufio"
-	"container/list"
 	"fmt"
 	"log"
 	"math"
@@ -37,11 +36,13 @@ func processDate(date string) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 }
 
-// parse result into list
-func load() (resultList *list.List, errors error) {
+// parse result into slice
+func load() (resultList []ResultData, errors error) {
 	remoteURL := "http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest"
 
-	resultList = list.New()
+	// I'm trying to replace list with slice
+	// as list has many problem I can't handle
+	resultList = make([]ResultData, 0)
 
 	log.Println("Download start, get list from apnic......")
 	resp, err := http.Get(remoteURL)
@@ -76,7 +77,8 @@ func load() (resultList *list.List, errors error) {
 
 			result.AllocationDate = processDate(s[5])
 
-			resultList.PushBack(result)
+			resultList = append(resultList, result)
+			//resultList.PushBack(result)
 		}
 	}
 

@@ -14,3 +14,6 @@ func GetByCountryCode(al []ResultData, cc ...string) (resultList []ResultData) {
 	}
 	return
 }
+
+// TODO:
+// add more function here

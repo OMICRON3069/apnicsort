@@ -6,7 +6,7 @@ Basicly, this program can deal with the list downloaded from http://ftp.apnic.ne
 
 - [x] Download list from url & load it into struct.
 - [x] Process IP range, convert it to CIDR schema.
-- [ ] Return a list of data struct with given conditions.
+- [ ] Return a slice of data struct with given conditions. (partial finished)
 - [ ] Appending data slice to a predefine template.
 - [ ] Periodically download & process list with a daemon process in background.
 - [ ] Ability to execute command after process job has done.
